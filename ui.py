@@ -3,10 +3,10 @@ import subprocess
 from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QDesktopServices, QIcon, QIconEngine
 from PyQt5.QtWidgets import QMessageBox, QMainWindow, QApplication, QListWidgetItem, QInputDialog, QFileDialog
-from .form import Ui_MainWindow
+from form import Ui_MainWindow
 import httpx, json, os
 from fastdocx import WordCore
-from .style import stype
+from style import stype
 # class CommonHelper:
 #   def __init__(self):
 #     pass
@@ -139,3 +139,5 @@ def ui():
   app.exec_()
 
 
+if __name__ == "__main__":
+    ui()
