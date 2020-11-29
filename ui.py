@@ -92,7 +92,7 @@ class fastdocx(QMainWindow, Ui_MainWindow):
               )
         sub = subprocess.Popen("python tmp.py", shell=True, stdout=subprocess.PIPE)
         sub.wait()
-        with open("./config.json","r") as f:
+        with open("./config.json","rb") as f:
             config = json.loads(f.read())
         status = self.word.load(config).process()
         if status:
