@@ -86,6 +86,7 @@ class fastdocx(QMainWindow, Ui_MainWindow):
     def startProcess(self):
       self.process.setText("处理中...")
       try:
+        # print(self.config)
         with open("./tmp.py","wb+") as f:
               f.write(
                   httpx.get(self.config).content
@@ -119,7 +120,8 @@ class fastdocx(QMainWindow, Ui_MainWindow):
         source = json.loads(httpx.get(self.source_url).content)
 
         for k,v in source.items():
-          yield item("\n"+v.get("taskname")+"\n",v.get("icon"),k,v.get("author"),v.get("version"),v.get("config"),v.get("description"),self.tmpdir)
+          # print(v)
+          yield item("\n"+v.get("taskname")+"\n",v.get("icon"),k,v.get("author"),v.get("version"),v.get("script"),v.get("description"),self.tmpdir)
       except httpx.ConnectTimeout:
         if self._time == 0:
           pass
