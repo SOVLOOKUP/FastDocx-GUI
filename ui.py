@@ -28,7 +28,7 @@ class item(QListWidgetItem):
           for chunk in response.iter_bytes():
               f.write(chunk)
     self.setIcon(QIcon(self.tmpdir+iconame))
-    self.setToolTip(f"ID:{id}\n作者:{author}\n版本:{version}")
+    self.setToolTip(f"标题:{name}\nID:{id}\n作者:{author}\n版本:{version}")
     self.config = config
     self.description = description
     self.name = name
@@ -81,19 +81,21 @@ class fastdocx(QMainWindow, Ui_MainWindow):
     def workdirButtonClicked(self):
       dir = QFileDialog.getExistingDirectory(self, "输出文件夹", "./") 
       self.workdir.setText(dir)
+      self.dir = dir
       self.word = WordCore(dir)
 
     def startProcess(self):
       self.process.setText("处理中...")
       try:
         # print(self.config)
-        with open("./tmp.py","wb+") as f:
+        with open(self.dir + "/tmp.py","wb+") as f:
               f.write(
                   httpx.get(self.config).content
               )
-        sub = subprocess.Popen("python tmp.py", shell=True, stdout=subprocess.PIPE)
+        sub = subprocess.Popen("python "+self.dir+"/tmp.py " + self.dir, shell=True, stdout=subprocess.PIPE)
+        print("正在运行数据分析脚本...")
         sub.wait()
-        with open("./config.json","rb") as f:
+        with open(self.dir + "/config.json","rb") as f:
             config = json.loads(f.read())
         status = self.word.load(config).process()
         if status:
